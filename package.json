@@ -1,0 +1,36 @@
+{
+  "version": "0.0.0",
+  "name": "coer91.tools",
+  "author": "Christian Omar Escamilla Rodríguez",
+  "license": "MIT",
+  "description": "",
+  "main": "src/index.ts",
+  "keywords": [
+    "Tools",
+    "interfaces"
+  ],
+  "files": [
+    "dist"
+  ],
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "scripts": { 
+    "copy:interfaces": "npx dts-bundle-generator -o dist/index.d.ts src/index.ts",
+    "copy:scripts": "esbuild src/index.ts --bundle --minify --platform=node --target=es2020 --outfile=dist/index.js",
+    "build": "npm run copy:scripts && npm run copy:interfaces",
+    "publish:npm": "npm run build && npm publish --access public"
+  },
+  "dependencies": {
+    "file-saver": "^2.0.5",
+    "rxjs": "^7.8.2",
+    "xlsx": "^0.18.5"
+  },
+  "devDependencies": {
+    "@types/file-saver": "^2.0.7",
+    "dts-bundle-generator": "^9.5.1",
+    "esbuild": "^0.25.10",
+    "typescript": "^5.9.2"
+  }
+}

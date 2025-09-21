@@ -1,0 +1,22 @@
+{
+  "compilerOptions": {
+    "paths": {
+      "coer91/Tools":      ["./src/index.ts"  ],
+      "coer91/Interfaces": ["./src/interfaces"],
+      "coer91/Extensions": ["./src/extensions"],
+    },
+    "target": "ES2022",
+    "module": "ES2022",
+    "moduleResolution": "node",
+    "outDir": "dist",
+    "rootDir": "src",
+    "strict": true,
+    "esModuleInterop": true,
+    "declaration": true,
+    "lib": ["ES2022", "dom"],
+    "baseUrl": "./"
+  }, 
+  "types": "dist/index.min.d.ts",
+  "include": ["src"],
+  "exclude": ["node_modules", "dist"],
+}
