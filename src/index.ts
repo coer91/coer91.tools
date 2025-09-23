@@ -1,7 +1,5 @@
-import './extensions/index';
-
-export * from './lib/files';
-export * from './lib/dates';
+export * from './lib/collections';
+export * from './lib/dates'; 
 export * from './lib/files';
 export * from './lib/filters';
 export * from './lib/generic';

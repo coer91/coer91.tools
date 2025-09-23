@@ -29,7 +29,7 @@ export class Dates {
         if(typeof date === 'string') { 
             date = Strings.CleanUpBlanks(date.replace(/(?:at|AT|t|T)/g, ' '));
             return /\b([01]?\d|2[0-3]):[0-5]\d(:[0-5]\d)?\b/.test(date) 
-                ? new Date(date) : null as any
+                ? new Date(date) : new Date(`${date} 00:00:00`)
         }
 
         else return date; 
