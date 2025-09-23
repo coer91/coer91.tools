@@ -25,7 +25,9 @@ export class Dates {
 
 
     /** */
-    private static _CleanDate(date: string | Date): Date {  
+    public static ToDate(date: string | Date): Date {  
+        if (Tools.IsNull(date)) return date as Date;
+
         if(typeof date === 'string') { 
             date = Strings.CleanUpBlanks(date.replace(/(?:at|AT|t|T)/g, ' '));
             return /\b([01]?\d|2[0-3]):[0-5]\d(:[0-5]\d)?\b/.test(date) 
@@ -38,7 +40,7 @@ export class Dates {
 
     /** */
     public static GetLastDay(date: string | Date): number {
-        const DATE = this._CleanDate(date); 
+        const DATE = this.ToDate(date); 
         return Tools.IsNotNull(DATE) ?
             new Date(DATE!.getFullYear(), DATE!.getMonth() + 1, 0).getDate()
             : -1;
@@ -54,18 +56,12 @@ export class Dates {
     /** */
     public static GetCurrentUTCDate(): Date {  
         return this.AddHours(new Date(), (this.GetOffset() / 60));
-    } 
-
-
-    /** */
-    public static ToDate(date: string | Date): Date { 
-        return this._CleanDate(date);
-    }
+    }  
 
 
     /** */
     public static ToLocalZone(utcDate: string | Date): Date { 
-        const DATE = this._CleanDate(utcDate); 
+        const DATE = this.ToDate(utcDate); 
         return Tools.IsNotNull(DATE) 
             ? new Date(new Date(utcDate).getTime() + this.GetOffset() * 60000)
             : null as any;
@@ -74,7 +70,7 @@ export class Dates {
 
     /** */
     public static ToUTC(date: string | Date): Date { 
-        const DATE = this._CleanDate(date); 
+        const DATE = this.ToDate(date); 
         return Tools.IsNotNull(DATE)  
             ? new Date(new Date(date).getTime() - this.GetOffset() * 60000)
             : null as any; 
@@ -83,7 +79,7 @@ export class Dates {
 
     /** YYYY-MM-DD HH:mm:ss */ 
     public static ToFormatDB(date: string | Date): string { 
-        const DATE = this._CleanDate(date);
+        const DATE = this.ToDate(date);
         if(Tools.IsNull(DATE)) return '';
         
         return `${DATE.getFullYear()}` + '-' 
@@ -97,7 +93,7 @@ export class Dates {
 
     /** MMM DD, YYYY */
     public static ToFormatDateMDY(date: string | Date): string {  
-        const DATE = this._CleanDate(date); 
+        const DATE = this.ToDate(date); 
         if(Tools.IsNull(DATE)) return '';
 
         return `${this.MONTHS.get(DATE.getMonth() + 1)}` + ' ' 
@@ -108,7 +104,7 @@ export class Dates {
 
     /** DD MMM YYYY */
     public static ToFormatDateDMY(date: string | Date): string {  
-        const DATE = this._CleanDate(date); 
+        const DATE = this.ToDate(date); 
         if(Tools.IsNull(DATE)) return '';
 
         return `${DATE.getDate()}`.padStart(2, '0') + ' ' 
@@ -119,7 +115,7 @@ export class Dates {
 
     /** */
     public static ToFormatDate(date: string | Date, format?: 'MDY' | 'DMY'): string {  
-        const DATE = this._CleanDate(date); 
+        const DATE = this.ToDate(date); 
         if(Tools.IsNull(DATE)) return '';
 
         if(Tools.IsOnlyWhiteSpace(format)) {
@@ -136,7 +132,7 @@ export class Dates {
 
     /** YYYY-MM-DD */ 
     public static ToDateOnly(date: string | Date): string { 
-        const DATE = this._CleanDate(date);
+        const DATE = this.ToDate(date);
         if(Tools.IsNull(DATE)) return ''; 
          
         return `${DATE.getFullYear()}` + '-' 
@@ -147,7 +143,7 @@ export class Dates {
 
     /** */
     public static ToFormatTime(date: string | Date, ampm: boolean = false): string {  
-       const DATE = this._CleanDate(date);
+       const DATE = this.ToDate(date);
        if(Tools.IsNull(DATE)) return '';
 
         if(ampm) {
@@ -176,7 +172,7 @@ export class Dates {
 
     /** */
     public static AddMilliseconds(date: string | Date, milliseconds: number): Date {
-        return new Date(this._CleanDate(date).getTime() + milliseconds);
+        return new Date(this.ToDate(date).getTime() + milliseconds);
     }
 
 
@@ -212,7 +208,7 @@ export class Dates {
 
     /** Add months */
     public static AddMonths(date: string | Date, months: number = 1): Date {
-        const DATE = this._CleanDate(date);        
+        const DATE = this.ToDate(date);        
         const DATE_UPDATED = new Date(DATE.getFullYear(), (DATE.getMonth() + months), 1);   
         DATE_UPDATED.setDate(Math.min(DATE.getDate(), new Date(DATE_UPDATED.getFullYear(), (DATE_UPDATED.getMonth() + 1), 0).getDate())); 
         DATE_UPDATED.setHours(DATE.getHours(), DATE.getMinutes(), DATE.getSeconds(), DATE.getMilliseconds());
@@ -222,7 +218,7 @@ export class Dates {
 
     /** Add years */
     public static AddYears(date: string | Date, years: number = 1): Date {
-        const DATE = this._CleanDate(date); 
+        const DATE = this.ToDate(date); 
         const DATE_UPDATED = new Date((DATE.getFullYear() + years), DATE.getMonth(), 1); 
         DATE_UPDATED.setDate(Math.min(DATE.getDate(), new Date(DATE_UPDATED.getFullYear(), DATE_UPDATED.getMonth() + 1, 0).getDate())); 
         DATE_UPDATED.setHours(DATE.getHours(), DATE.getMinutes(), DATE.getSeconds(), DATE.getMilliseconds());
@@ -232,7 +228,7 @@ export class Dates {
 
     /** */
     public static SetMillisecond(date: string | Date, millisecond: number = 0): Date {
-        const DATE = this._CleanDate(date);
+        const DATE = this.ToDate(date);
 
         if (millisecond < 0 || millisecond >= 1000) {
             millisecond = DATE.getMilliseconds();
@@ -245,7 +241,7 @@ export class Dates {
 
     /** */
     public static SetSecond(date: string | Date, second: number  = 0): Date {
-        const DATE = this._CleanDate(date);
+        const DATE = this.ToDate(date);
 
         if (second < 0 || second >= 60) {
             second = DATE.getSeconds(); 
@@ -258,7 +254,7 @@ export class Dates {
 
     /** */
     public static SetMinute(date: string | Date, minute: number = 0): Date {
-        const DATE = this._CleanDate(date);
+        const DATE = this.ToDate(date);
          
         if (minute < 0 || minute >= 60) {
             minute = DATE.getMinutes();  
@@ -271,7 +267,7 @@ export class Dates {
 
     /** */
     public static SetHour(date: string | Date, hour: number  = 0): Date {   
-        const DATE = this._CleanDate(date); 
+        const DATE = this.ToDate(date); 
 
         if (hour < 0 || hour >= 24) {
             hour = DATE.getHours();  
@@ -284,7 +280,7 @@ export class Dates {
 
     /** Set 00:00:00 */
     public static SetFirstHour(date: string | Date): Date {   
-        const DATE = this._CleanDate(date);
+        const DATE = this.ToDate(date);
         DATE.setHours(0, 0, 0);
         return DATE;
     }
@@ -292,7 +288,7 @@ export class Dates {
 
     /** Set 23:59:59 */
     public static SetLastHour(date: string | Date): Date {     
-        const DATE = this._CleanDate(date);
+        const DATE = this.ToDate(date);
         DATE.setHours(23, 59, 59);
         return DATE;
     } 
@@ -300,7 +296,7 @@ export class Dates {
 
     /** */
     public static SetDay(date: string | Date, day: number = 1): Date {
-        const DATE = this._CleanDate(date); 
+        const DATE = this.ToDate(date); 
 
         if (day < 1 || day > this.GetLastDay(DATE)) {
             day = DATE.getDate();
@@ -339,17 +335,17 @@ export class Dates {
         unit: 'milliseconds' | 'seconds' | 'minutes' | 'hours' | 'days' = 'minutes'
     ): number {  
         switch (unit) {
-            case 'milliseconds': return Number(Numbers.SetDecimals(this._CleanDate(fromDate).getTime() - this._CleanDate(toDate).getTime(), 0));
-            case 'seconds':      return Number(Numbers.SetDecimals((this._CleanDate(fromDate).getTime() - this._CleanDate(toDate).getTime()) / 1000, 0));
-            case 'minutes':      return Number(Numbers.SetDecimals((this._CleanDate(fromDate).getTime() - this._CleanDate(toDate).getTime()) / (1000 * 60), 0));
-            case 'hours':        return Number(Numbers.SetDecimals((this._CleanDate(fromDate).getTime() - this._CleanDate(toDate).getTime()) / (1000 * 60 * 60), 0));
-            case 'days':         return Number(Numbers.SetDecimals((this._CleanDate(fromDate).getTime() - this._CleanDate(toDate).getTime()) / (1000 * 60 * 60 * 24), 0)); 
+            case 'milliseconds': return Number(Numbers.SetDecimals(this.ToDate(fromDate).getTime() - this.ToDate(toDate).getTime(), 0));
+            case 'seconds':      return Number(Numbers.SetDecimals((this.ToDate(fromDate).getTime() - this.ToDate(toDate).getTime()) / 1000, 0));
+            case 'minutes':      return Number(Numbers.SetDecimals((this.ToDate(fromDate).getTime() - this.ToDate(toDate).getTime()) / (1000 * 60), 0));
+            case 'hours':        return Number(Numbers.SetDecimals((this.ToDate(fromDate).getTime() - this.ToDate(toDate).getTime()) / (1000 * 60 * 60), 0));
+            case 'days':         return Number(Numbers.SetDecimals((this.ToDate(fromDate).getTime() - this.ToDate(toDate).getTime()) / (1000 * 60 * 60 * 24), 0)); 
         }
     } 
 
 
     /** */
     public static GetYear(date: string | Date): number { 
-        return this._CleanDate(date).getFullYear();
+        return this.ToDate(date).getFullYear();
     }
 }
