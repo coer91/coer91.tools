@@ -6,5 +6,6 @@ export * from './lib/generic';
 export * from './lib/html-elements';
 export * from './lib/http';
 export * from './lib/numbers';
+export * from './lib/screen';
 export * from './lib/strings';
 export * from './lib/users';
