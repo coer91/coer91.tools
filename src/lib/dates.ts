@@ -26,7 +26,7 @@ export class Dates {
 
     /** */
     public static ToDate(date: string | Date): Date {  
-        if (Tools.IsNull(date)) return date as Date;
+        if (Tools.IsOnlyWhiteSpace(date)) return null as any as Date;
 
         if(typeof date === 'string') { 
             date = Strings.CleanUpBlanks(date.replace(/(?:at|AT|t|T)/g, ' '));
