@@ -5,6 +5,6 @@ export interface IHttpRequest<T> {
     responseType?: 'arraybuffer' | 'blob' | 'json' | 'text';
     withCredentials?: boolean;
     body?: T | IPatch[] | {};
-    queryParams?: { param: string, value: string | number | Date | null | undefined }[];
+    queryParams?: { param: string, value: string | number | Date | boolean | null | undefined }[];
     headers?: { header: string, value: string | number | null | undefined }[]; 
 }
