@@ -198,6 +198,24 @@ export class Http {
     }
 
 
+    /** Download a ZIP file from browser */
+    public static DOWNLOAD_ZIP(buffer: ArrayBuffer, fileName: string = ''): Blob {
+    
+        if (Tools.IsOnlyWhiteSpace(fileName)) {
+            fileName = Tools.IsNotNull(appSettings)
+                && Tools.IsNotNull(appSettings?.appInfo)
+                && Tools.IsNotOnlyWhiteSpace(appSettings?.appInfo?.storage)
+                ? appSettings.appInfo.storage : 'coer91';
+        }
+    
+        if (!fileName.endsWith('.zip')) fileName += ".zip";
+    
+        const BLOB = new Blob([buffer], { type: 'application/zip' });
+        saveAs(BLOB, fileName);
+        return BLOB;
+    }
+
+
     /** */ 
     private static BuildRequest<T>(request: IHttpRequest<T>, method: 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE'): { 
         url: string, 
