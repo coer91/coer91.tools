@@ -2,6 +2,7 @@
 export * from './generic/bulk-load.interface';
 export * from './generic/option.interface';
 export * from './generic/screen-size.interface';
+export * from './generic/email.interface';
 
 //HTTP
 export * from './http/http-request.interface'; 
