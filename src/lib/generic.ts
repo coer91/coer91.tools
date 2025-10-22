@@ -1,4 +1,5 @@
 import { Numbers } from './numbers';
+import { Strings } from './strings';
 
 export const Tools = {
 
@@ -136,4 +137,8 @@ export const Tools = {
 
         return (type === 'string' ? '' : type === 'number' ? 0 : false) as T;
     },  
+
+
+    /**  */
+    ConcatName: (...args: string[]): string => args.map(Strings.CleanUpBlanks).filter(Tools.IsNotOnlyWhiteSpace).join(' '),
 };
