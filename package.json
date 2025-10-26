@@ -14,8 +14,7 @@
   "repository": {
     "type": "git",
     "url": ""
-  },
-   "scripts": {  
+  },   "scripts": {  
       "copy:extensions": "npx esbuild src/extensions/index.ts --bundle --minify --outfile=dist/extensions/index.min.js",
       "copy:interfaces": "xcopy src\\interfaces dist\\interfaces /E /I /Y",
       "build": "tsc",
