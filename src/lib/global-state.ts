@@ -1,6 +1,6 @@
 import type { IMenu } from "../interfaces";
 
-export abstract class GlobalState {
+export class GlobalState91 {
 
     //User
     private static _user: string = '';
