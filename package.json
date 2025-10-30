@@ -1,5 +1,5 @@
 {
-  "version": "0.0.21",
+  "version": "0.0.23",
   "name": "coer91.tools",
   "author": "Christian Omar Escamilla Rodríguez",
   "license": "MIT",
@@ -15,6 +15,7 @@
     "type": "git",
     "url": ""
   },
+  "sideEffects": false,
   "scripts": {
     "copy:extensions": "npx esbuild src/extensions/index.ts --bundle --minify --outfile=dist/extensions/index.min.js",
     "copy:interfaces": "xcopy src\\interfaces dist\\interfaces /E /I /Y",
