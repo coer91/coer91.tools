@@ -1,12 +1,13 @@
 {
-  "version": "0.0.23",
+  "version": "0.0.24",
   "name": "coer91.tools",
   "author": "Christian Omar Escamilla Rodríguez",
   "license": "MIT",
-  "description": "",
+  "description": "This library provides general tools for any project that uses TS",
   "keywords": [
     "Tools",
-    "interfaces"
+    "Interfaces",
+    "Extensions"
   ],
   "files": [
     "dist"
@@ -16,9 +17,17 @@
     "url": ""
   },
   "sideEffects": false,
+  "exports": {
+    "./extensions": {
+      "import": "./dist/extensions/index.js",
+      "types": "./dist/extensions/index.d.ts"
+    },
+    "./interfaces": {
+      "import": "./dist/interfaces/index.ts",
+      "types": "./dist/interfaces/index.d.ts"
+    }
+  },
   "scripts": {
-    "copy:extensions": "npx esbuild src/extensions/index.ts --bundle --minify --outfile=dist/extensions/index.min.js",
-    "copy:interfaces": "xcopy src\\interfaces dist\\interfaces /E /I /Y",
     "build": "tsc",
     "publish:npm": "npm run build && npm publish --access public"
   },
@@ -29,8 +38,6 @@
   },
   "devDependencies": {
     "@types/file-saver": "^2.0.7",
-    "dts-bundle-generator": "^9.5.1",
-    "esbuild": "^0.25.10",
     "typescript": "^5.9.2"
   }
 }

@@ -1,4 +1,4 @@
-import { Collections } from "../lib/collections";
+import { Collections } from "../../lib/collections";
 
 declare global {
     interface Array<T> { 

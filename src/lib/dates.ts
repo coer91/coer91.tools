@@ -3,7 +3,6 @@ import { Numbers } from "./numbers";
 import { Strings } from "./strings";
 declare const appSettings: any;
 
-/** Provides several methods for dates manipulation */
 export class Dates {
     
     public static readonly MONTHS = new Map<number, string>([
@@ -92,7 +91,7 @@ export class Dates {
 
 
     /** MMM DD, YYYY */
-    public static ToFormatDateMDY(date: string | Date): string {  
+    private static ToFormatDateMDY(date: string | Date): string {  
         const DATE = this.ToDate(date); 
         if(Tools.IsNull(DATE)) return '';
 
@@ -103,7 +102,7 @@ export class Dates {
 
 
     /** DD MMM YYYY */
-    public static ToFormatDateDMY(date: string | Date): string {  
+    private static ToFormatDateDMY(date: string | Date): string {  
         const DATE = this.ToDate(date); 
         if(Tools.IsNull(DATE)) return '';
 
@@ -125,8 +124,8 @@ export class Dates {
                 ? appSettings?.dateTime?.format : 'MDY';
         } 
 
-        if(format == 'DMY') return Dates.ToFormatDateDMY(date);
-        else return Dates.ToFormatDateMDY(date);
+        if(format == 'DMY') return this.ToFormatDateDMY(date);
+        else return this.ToFormatDateMDY(date);
     }
 
 

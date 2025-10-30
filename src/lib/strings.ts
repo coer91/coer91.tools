@@ -1,6 +1,5 @@
 import { Tools } from "./generic";
-
-/** Provides several methods for string manipulation */
+ 
 export class Strings { 
 
 

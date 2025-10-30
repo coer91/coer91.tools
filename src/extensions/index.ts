@@ -1,3 +1,3 @@
-export * from './array.extension';
-export * from './date.extension';
-export * from './string.extension';
+export * from './lib/array.extension';
+export * from './lib/date.extension';
+export * from './lib/string.extension';

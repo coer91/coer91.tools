@@ -1,4 +1,4 @@
-import { Dates } from "../lib/dates";
+import { Dates } from "../../lib/dates";
 
 declare global {
     interface Date { 
