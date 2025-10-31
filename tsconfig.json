@@ -1,10 +1,5 @@
 {
-  "compilerOptions": {
-    "paths": {
-      "coer91/Tools":      ["./src/index.ts"  ],
-      "coer91/Interfaces": ["./src/interfaces"],
-      "coer91/Extensions": ["./src/extensions"],
-    },
+  "compilerOptions": { 
     "target": "ES2022",
     "module": "ES2022",
     "moduleResolution": "node",

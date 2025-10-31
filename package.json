@@ -1,5 +1,5 @@
 {
-  "version": "0.0.26",
+  "version": "0.0.30",
   "name": "coer91.tools",
   "author": "Christian Omar Escamilla Rodríguez",
   "license": "MIT",
@@ -19,15 +19,15 @@
   "sideEffects": false,
   "exports": {
     ".": {
-      "import": "./dist/index.ts",
+      "import": "./dist/index.js",
       "types": "./dist/index.d.ts"
     },
-    "./Extensions": {
+    "./extensions": {
       "import": "./dist/extensions/index.js",
       "types": "./dist/extensions/index.d.ts"
     },
-    "./Interfaces": {
-      "import": "./dist/interfaces/index.ts",
+    "./interfaces": {
+      "import": "./dist/interfaces/index.js",
       "types": "./dist/interfaces/index.d.ts"
     }
   },

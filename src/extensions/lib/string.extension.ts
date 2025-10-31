@@ -1,5 +1,5 @@
-import { Tools } from "../../lib/generic";
 import { Strings } from "../../lib/strings";
+import { Tools } from "../../lib/generic"; 
 
 declare global {
     interface String {
