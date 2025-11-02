@@ -13,11 +13,13 @@ export * from './lib/http/patch.interface';
 //Login
 export * from './lib/login/login-response.interface';
 export * from './lib/login/login.interface';
+export * from './lib/login/user-login.interface';
 
 //Navigation
 export * from './lib/navigation/app-source.interface';
 export * from './lib/navigation/menu-toolbar.interface';
 export * from './lib/navigation/menu.interface';
+export * from './lib/navigation/router-lazy.interface';
 
 //Page Title
 export * from './lib/page-title/title-breadcrumb.interface';
