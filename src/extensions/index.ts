@@ -1,3 +1,4 @@
-export * from './lib/array.extension';
-export * from './lib/date.extension';
-export * from './lib/string.extension';
+import './lib/array.extension';
+import './lib/date.extension';
+import './lib/string.extension';
+export {};

@@ -1,6 +1,5 @@
 import { Tools } from "./generic";
-
-/** Provides several methods for collection manipulation */
+ 
 export class Collections {
     
     /** Set an index and concat more arrays of the same type */

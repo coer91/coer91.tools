@@ -1,3 +1,4 @@
+import { IUserStorage } from "../interfaces/index";
 import { Tools } from "./generic";
 declare const appSettings: any;
 
@@ -7,7 +8,7 @@ export class User {
     private static readonly storage = appSettings?.appInfo?.storage || 'coer91';
     
     /** Save the user to localStorage */    
-    public static Set(user: any): void { 
+    public static Set(user: IUserStorage): void { 
         let storage = localStorage.getItem(this.storage) as any;  
 
         if (storage) {
@@ -25,7 +26,7 @@ export class User {
      
 
     /** Get the user from localStorage */
-    public static Get(): any | null {
+    public static Get(): IUserStorage | null {
         let storage = localStorage.getItem(this.storage) as any;
 
         if (storage) {

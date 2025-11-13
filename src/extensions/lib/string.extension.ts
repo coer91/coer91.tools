@@ -42,6 +42,9 @@ declare global {
 
         /** Returns true if has string value and is not only whitespace, false otherwise */
         isNotOnlyWhiteSpace(): boolean; 
+
+        /** */
+        concatName(...args: string[]): string; 
     }
 }
 
@@ -96,6 +99,10 @@ String.prototype.isOnlyWhiteSpace = function(): boolean {
 
 String.prototype.isNotOnlyWhiteSpace = function(): boolean {
     return Tools.IsNotOnlyWhiteSpace(this);
+}
+
+String.prototype.concatName = function(...args: string[]): string {
+    return Strings.ConcatName(this.toString(), ...args);
 }
 
 export {};

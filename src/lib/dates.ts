@@ -38,7 +38,7 @@ export class Dates {
 
 
     /** */
-    public static GetLastDay(date: string | Date): number {
+    public static GetLastDayOfMonth(date: string | Date): number {
         const DATE = this.ToDate(date); 
         return Tools.IsNotNull(DATE) ?
             new Date(DATE!.getFullYear(), DATE!.getMonth() + 1, 0).getDate()
@@ -297,7 +297,7 @@ export class Dates {
     public static SetDay(date: string | Date, day: number = 1): Date {
         const DATE = this.ToDate(date); 
 
-        if (day < 1 || day > this.GetLastDay(DATE)) {
+        if (day < 1 || day > this.GetLastDayOfMonth(DATE)) {
             day = DATE.getDate();
         }
 
@@ -314,7 +314,7 @@ export class Dates {
 
     /**  */
     public static SetLastDay(date: string | Date): Date { 
-        return this.SetDay(date, this.GetLastDay(date));
+        return this.SetDay(date, this.GetLastDayOfMonth(date));
     }
 
 

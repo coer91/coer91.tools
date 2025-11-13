@@ -123,4 +123,10 @@ export class Strings {
     
         return false;
     }
+
+
+    /**  */
+    public static ConcatName(...args: string[]): string {
+        return args.map(Strings.CleanUpBlanks).filter(Tools.IsNotOnlyWhiteSpace).join(' ');
+    }
 }

@@ -1,3 +1,4 @@
+export * from './lib/breadcrumbs';
 export * from './lib/collections';
 export * from './lib/dates'; 
 export * from './lib/files';
@@ -7,5 +8,6 @@ export * from './lib/html-elements';
 export * from './lib/http';
 export * from './lib/numbers';
 export * from './lib/screen';
+export * from './lib/source';
 export * from './lib/strings';
 export * from './lib/users';

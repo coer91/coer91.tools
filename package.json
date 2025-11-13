@@ -1,5 +1,5 @@
 {
-  "version": "0.0.31",
+  "version": "0.0.32",
   "name": "coer91.tools",
   "author": "Christian Omar Escamilla Rodríguez",
   "license": "MIT",
@@ -33,6 +33,7 @@
   },
   "scripts": {
     "build:lib": "tsc",
+    "copy:extensions": "xcopy src\\extensions dist\\extensions /E /I /Y",
     "publish:npm": "npm run build:lib && npm publish --access public"
   },
   "dependencies": {
