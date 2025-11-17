@@ -17,13 +17,7 @@ export abstract class Page {
     protected isReadonlyPage: boolean = true;
 
     /** */
-    protected isReadyPage: boolean = false;  
-
-    /** */
-    protected routeParams: any;
-
-    /** */
-    protected queryParams: any;
+    protected isReadyPage: boolean = false;   
 
     /** */
     protected breadcrumbs: ITitleBreadcrumb[] = [];
@@ -42,13 +36,10 @@ export abstract class Page {
     private __page: string = '';
     private __source: IAppSource | null = null;
     private __preventDestroy: boolean = false;
-    private __router: ((path: string) => void) | null = null;
-
 
     /** */
-    constructor(pageName: string, router?: (path: string) => void) {
-        this.__router = Tools.IsFunction(router) ? router! : null;
-        this.SetPageName(pageName);
+    constructor(pageName: string) {
+        this.SetName(pageName);
         this.__SetSource();
         this.__GetSource();
         this.__GetNavigation();
@@ -59,12 +50,12 @@ export abstract class Page {
 
 
     protected destroy(): void { 
-        if (!this.__preventDestroy) this.ClearPageResponse();
+        if (!this.__preventDestroy) this.ClearResponse();
     }
 
 
     /** Rename the last breadcrumb and update the url id */
-    protected SetPageName(pageName: string, id: string | number | null = null): void {
+    protected SetName(pageName: string, id: string | number | null = null): void {
         this.__page = pageName;
 
         this.__path = document.location.href;
@@ -84,8 +75,8 @@ export abstract class Page {
         if (this.breadcrumbs.length > 0) {
             this.breadcrumbs[this.breadcrumbs.length - 1].page = pageName;
             this.breadcrumbs[this.breadcrumbs.length - 1].path = this.__path;
-            Breadcrumbs.UpdateLast(pageName, this.__path);
-        }
+            Breadcrumbs.UpdateLast(pageName, this.__path); 
+        } 
 
         document.location.href = this.__path;
     }
@@ -152,19 +143,18 @@ export abstract class Page {
     protected GoToSource<T>(pageResponse: T | null = null, navigate?: (url: string) => void): void {
         if(this.__source) {
             Breadcrumbs.RemoveLast();
-            this.SetPageResponse(pageResponse);
-            this.RemovePageFilter();
+            this.SetResponse(pageResponse);
+            this.RemoveFilter();
 
             Tools.Sleep().then(() => {
                 if(Tools.IsFunction(navigate)) navigate!(this.__source!.path);
-                else if(Tools.IsFunction(this.__router)) this.__router!(this.__source!.path);
             }); 
         }
     };
 
 
     /** */
-    protected SetPageResponse<T>(pageResponse: T | null = null): void {
+    protected SetResponse<T>(pageResponse: T | null = null): void {
         if (Tools.IsNotNull(pageResponse)) {
             this.__preventDestroy = true;
             PageResponse.Set(pageResponse);
@@ -173,27 +163,27 @@ export abstract class Page {
 
 
     /** */
-    protected ClearPageResponse(): void {
+    protected ClearResponse(): void {
         PageResponse.Clear();
     };
 
 
     /** */
-    protected ReloadPage(): void {
+    protected Reload(): void {
         Breadcrumbs.RemoveLast(); 
         Tools.Sleep().then(() => window.location.reload());
     }
 
 
     /** */
-    protected SetPageFilters<T>(filters: T): void {
+    protected SetFilters<T>(filters: T): void {
         this.pageFilters = Tools.BreakReference<T>(filters);
         Filters.Add(this.pageFilters, this.__path); 
     }
 
 
     /** */
-    protected RemovePageFilter(): void { 
+    protected RemoveFilter(): void { 
         this.pageFilters = {};
         Filters.Remove(this.__path); 
     }

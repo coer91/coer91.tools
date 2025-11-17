@@ -120,7 +120,7 @@ export class Dates {
         if(Tools.IsOnlyWhiteSpace(format)) {
             format = Tools.IsNotNull(appSettings)
                 && Tools.IsNotNull(appSettings?.dateTime)
-                && Tools.IsNotNull(appSettings?.dateTime?.format)
+                && Tools.IsNotOnlyWhiteSpace(appSettings?.dateTime?.format)
                 ? appSettings?.dateTime?.format : 'MDY';
         } 
 

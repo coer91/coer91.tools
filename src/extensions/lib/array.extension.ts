@@ -22,7 +22,7 @@ declare global {
 
 
 Array.prototype.setIndex = function<T>(...args: T[][]): T[] {
-    return Collections.SetIndex(this, args);   
+    return Collections.SetIndex([...this], args);   
 }
 
 

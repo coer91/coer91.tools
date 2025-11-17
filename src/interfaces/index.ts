@@ -14,7 +14,6 @@ export * from './lib/http/patch.interface';
 export * from './lib/login/jwt.interface';
 export * from './lib/login/login-response.interface';
 export * from './lib/login/login.interface';
-export * from './lib/login/user-login.interface';
 export * from './lib/login/user-storage.interface';
 
 //Navigation

@@ -1,7 +1,6 @@
 import { IAppSource } from "../interfaces/index"; 
 declare const appSettings: any;
 
-/** Controls the breadcrumbs in sessionStorage */
 export class Breadcrumbs {
 
     private static readonly storage = appSettings?.appInfo?.storage || 'coer91';

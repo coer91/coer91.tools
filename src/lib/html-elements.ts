@@ -4,13 +4,13 @@ export class HTMLElements {
 
     /** */
     public static GetElement = (selector: string): HTMLElement | null => { 
-        return document.querySelector(selector);
+        return Tools.IsOnlyWhiteSpace(selector) ? null : document.querySelector(selector);
     }
 
 
     /** */
     public static GetElementById = (id: string): HTMLElement | null => { 
-        return document.getElementById(id);
+        return Tools.IsOnlyWhiteSpace(id) ? null : document.getElementById(id);
     }
 
 
@@ -30,7 +30,7 @@ export class HTMLElements {
 
     /** */
     public static ScrollToElement = (element: string | HTMLElement | null | undefined, container: string | HTMLElement = ''): void => { 
-        const HTML_ELEMENT = (typeof element   === 'string') ? this.GetElement(element) : element;   
+        const HTML_ELEMENT = (typeof element === 'string') ? this.GetElement(element) : element;   
 
         if(HTML_ELEMENT) { 
             const HTML_CONTAINER = (typeof container === 'string') ? this.GetElement(container) : container;
@@ -67,11 +67,12 @@ export class HTMLElements {
 
 
     /** Gets the width of the element in px */
-    public static GetElementWidth = (element: HTMLElement | null | undefined, ...args: (number | HTMLElement | null | undefined)[]): string => {
+    public static GetElementWidth = (element: string | HTMLElement | null | undefined, ...args: (number | HTMLElement | null | undefined)[]): string => {
         let width: number = 0;
         
-        if(Tools.IsNotNull(element) && Tools.IsNotOnlyWhiteSpace(element?.offsetWidth)) {
-            width += element!.offsetWidth;
+        const HTML_ELEMENT = (typeof element === 'string') ? this.GetElement(element) : element; 
+        if(Tools.IsNotNull(HTML_ELEMENT) && Tools.IsNotOnlyWhiteSpace(HTML_ELEMENT?.offsetWidth)) {
+            width += HTML_ELEMENT!.offsetWidth;
 
             for (const arg of args) {
                 if (typeof arg == 'number') width += arg;
@@ -87,11 +88,12 @@ export class HTMLElements {
 
 
     /** Gets the height of the element in px */
-    public static GetElementHeight = (element: HTMLElement | null | undefined, ...args: (number | HTMLElement | null | undefined)[]): string => {
+    public static GetElementHeight = (element: string | HTMLElement | null | undefined, ...args: (number | HTMLElement | null | undefined)[]): string => {
         let height: number = 0;
-        
-        if(Tools.IsNotNull(element) && Tools.IsNotOnlyWhiteSpace(element?.offsetHeight)) {
-            height += element!.offsetHeight;
+
+        const HTML_ELEMENT = (typeof element === 'string') ? this.GetElement(element) : element; 
+        if(Tools.IsNotNull(HTML_ELEMENT) && Tools.IsNotOnlyWhiteSpace(HTML_ELEMENT?.offsetHeight)) {
+            height += HTML_ELEMENT!.offsetHeight;
 
             for (const arg of args) {
                 if (typeof arg == 'number') height += arg;

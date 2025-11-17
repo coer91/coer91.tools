@@ -4,16 +4,19 @@ declare global {
     interface Date { 
 
         /** */
-        getOffset(): number;
+        getOffset(): number; 
 
         /** */
-        getLastDay(): number;
+        isValidDate(): boolean; 
 
         /** */
-        isValidDate(): boolean;
+        getLastDayOfMonth(): number;       
 
         /** */
         getCurrentDate(): Date;
+
+        /** */
+        getCurrentUTCDate(): Date;
 
         /** Convert UTC Date to Local Zone */
         toLocalZone(): Date;
@@ -29,6 +32,9 @@ declare global {
 
         /** */
         toFormatDateTime(ampm?: boolean, format?: 'MDY' | 'DMY' | 'YMD'): string;
+
+        /** YYYY-MM-DD */ 
+        toDateOnly(): string;
 
         /** */
         addMilliseconds(milliseconds: number): Date;
@@ -86,6 +92,9 @@ declare global {
 
         /** */
         getDiff(date: string | Date, unit?: 'milliseconds' | 'seconds' | 'minutes' | 'hours' | 'days'): number;
+
+        /** */
+        getYear(): number;
     }
 }  
 
@@ -94,16 +103,20 @@ Date.prototype.getOffset = function(): number {
     return Dates.GetOffset();   
 }
 
-Date.prototype.getLastDay = function(): number {
-    return Dates.GetLastDay(this);   
-}
-
 Date.prototype.isValidDate = function(): boolean {
     return Dates.IsValidDate(this);   
 }
 
+Date.prototype.getLastDayOfMonth = function(): number {
+    return Dates.GetLastDayOfMonth(this);   
+} 
+
 Date.prototype.getCurrentDate = function(): Date {
     return Dates.GetCurrentDate();   
+}
+
+Date.prototype.getCurrentUTCDate = function(): Date {
+    return Dates.GetCurrentUTCDate();   
 }
 
 Date.prototype.toLocalZone = function(): Date {
@@ -124,6 +137,10 @@ Date.prototype.toFormatDate = function(format?: 'MDY' | 'DMY'): string {
 
 Date.prototype.toFormatDateTime = function(ampm: boolean = true, format?: 'MDY' | 'DMY'): string {
     return Dates.ToFormatDateTime(this, ampm, format);   
+}
+
+Date.prototype.toDateOnly = function(): string {
+    return Dates.ToDateOnly(this);   
 }
 
 Date.prototype.addMilliseconds = function(milliseconds: number = 1): Date {
@@ -200,6 +217,10 @@ Date.prototype.getDiffNow = function(unit: 'milliseconds' | 'seconds' | 'minutes
 
 Date.prototype.getDiff = function(date: string | Date, unit: 'milliseconds' | 'seconds' | 'minutes' | 'hours' | 'days' = 'minutes'): number {
     return Dates.GetDiff(this, date, unit);
+}
+
+Date.prototype.getYear = function(): number {
+    return Dates.GetYear(this);
 }
 
 export {}; 

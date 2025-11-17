@@ -57,7 +57,7 @@ export class User {
 
 
     /** Removes data from localStorage and sessionStorage, except for the user and navigate to root */
-    public static LogOut(): void {
+    public static LogOut(message: string = ''): void {
         let storage = localStorage.getItem(this.storage) as any; 
 
         sessionStorage.removeItem(this.storage);
@@ -69,9 +69,10 @@ export class User {
             const STORAGE_USER = storage?.user;
             const user = STORAGE_USER?.user;
             const remember = Tools.AvoidNull<boolean>(STORAGE_USER?.remember, 'boolean');
+            const logOutMessage = message.trim();
              
             if (remember && Tools.IsNotOnlyWhiteSpace(user)) {
-                localStorage.setItem(this.storage, JSON.stringify({ user: { user, remember }})); 
+                localStorage.setItem(this.storage, JSON.stringify({ user: { user, logOutMessage, remember }})); 
             }
         } 
         
