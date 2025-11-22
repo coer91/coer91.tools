@@ -1,7 +1,7 @@
 export interface IAppSettings {
     appInfo: {
         id: number;
-        name: string;
+        project: string;
         title: string;
         storage: string;
         version: string;
@@ -13,9 +13,9 @@ export interface IAppSettings {
         isProduction: boolean;
     }, 
     dateTime: {
-        format: 'MDY' | 'DMY'
+        format: 'MDY' | 'DMY';
     },
     navigation: {
-        static: boolean
+        static: boolean;
     }
 }

@@ -18,6 +18,7 @@ export * from './lib/login/user-storage.interface';
 
 //Navigation
 export * from './lib/navigation/app-source.interface';
+export * from './lib/navigation/menu-selected.interface';
 export * from './lib/navigation/menu-toolbar.interface';
 export * from './lib/navigation/menu.interface';
 export * from './lib/navigation/router-lazy.interface';

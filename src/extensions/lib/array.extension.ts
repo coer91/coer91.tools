@@ -7,6 +7,9 @@ declare global {
         setIndex(...args: T[][]): T[];
 
         /** */
+        setId(...args: T[][]): T[];
+
+        /** */
         distinctStrings(): string[];
 
         /** */
@@ -23,6 +26,11 @@ declare global {
 
 Array.prototype.setIndex = function<T>(...args: T[][]): T[] {
     return Collections.SetIndex([...this], args);   
+}
+
+
+Array.prototype.setId = function<T>(...args: T[][]): T[] {
+    return Collections.SetId([...this], args);   
 }
 
 

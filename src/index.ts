@@ -6,6 +6,7 @@ export * from './lib/filters';
 export * from './lib/generic'; 
 export * from './lib/html-elements';
 export * from './lib/http';
+export * from './lib/navigation';
 export * from './lib/numbers';
 export * from './lib/screen';
 export * from './lib/source';

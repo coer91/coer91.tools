@@ -4,13 +4,27 @@ export class HTMLElements {
 
     /** */
     public static GetElement = (selector: string): HTMLElement | null => { 
-        return Tools.IsOnlyWhiteSpace(selector) ? null : document.querySelector(selector);
+        try {
+            return Tools.IsOnlyWhiteSpace(selector) ? null : document.querySelector(selector);
+        }
+
+        catch(error) {
+            console.warn(error);
+            return null;
+        }
     }
 
 
     /** */
-    public static GetElementById = (id: string): HTMLElement | null => { 
-        return Tools.IsOnlyWhiteSpace(id) ? null : document.getElementById(id);
+    public static GetElementById = (id: string): HTMLElement | null => {         
+        try {
+            return Tools.IsOnlyWhiteSpace(id) ? null : document.getElementById(id);
+        }
+
+        catch(error) {
+            console.warn(error);
+            return null;
+        }
     }
 
 
