@@ -8,6 +8,8 @@ export * from './lib/html-elements';
 export * from './lib/http';
 export * from './lib/navigation';
 export * from './lib/numbers';
+export * from './lib/page-response';
+export * from './lib/page';
 export * from './lib/screen';
 export * from './lib/source';
 export * from './lib/strings';
