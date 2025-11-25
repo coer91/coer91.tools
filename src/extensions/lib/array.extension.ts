@@ -10,16 +10,16 @@ declare global {
         setId(...args: T[][]): T[];
 
         /** */
-        distinctStrings(): string[];
+        distinct(): T[]; 
 
         /** */
-        distinctNumbers(): number[];
+        except(exceptions: T[]): T[];
+        
+        /** */
+        intercept(array: T[]): T[];
 
         /** */
-        exceptStrings(exceptions: string[]): string[];
-
-        /** */
-        exceptNumbers(exceptions: number[]): number[];
+        search(text: string, properties?: string[]): T[];
     }
 }  
 
@@ -34,23 +34,23 @@ Array.prototype.setId = function<T>(...args: T[][]): T[] {
 }
 
 
-Array.prototype.distinctStrings = function(): string[] {
-    return Collections.DistinctStrings(this);   
-}
+Array.prototype.distinct = function<T>(): T[] {
+    return Collections.Distinct(this);   
+} 
 
 
-Array.prototype.distinctNumbers = function(): number[] {
-    return Collections.DistinctNumbers(this);   
-}
+Array.prototype.except = function<T>(exceptions: T[]): T[] {
+    return Collections.Except(this, exceptions);   
+} 
 
 
-Array.prototype.exceptStrings = function(exceptions: string[]): string[] {
-    return Collections.ExceptStrings(this, exceptions);   
-}
+Array.prototype.intercept = function<T>(array: T[]): T[] {
+    return Collections.Intercept(this, array);   
+} 
 
 
-Array.prototype.exceptNumbers = function(exceptions: number[]): number[] {
-    return Collections.ExceptNumbers(this, exceptions);   
+Array.prototype.search = function<T>(text: string, properties: string[] = []): T[] {
+    return Collections.Search(this, text, properties);   
 }
 
 
