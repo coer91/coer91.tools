@@ -1,5 +1,9 @@
 import { Numbers } from './numbers';
 
+class _Tools {
+    static transactions = new Map<string, ReturnType<typeof setTimeout>>();
+}
+
 export const Tools = {
 
     /** Generates a guid */
@@ -96,13 +100,7 @@ export const Tools = {
         return Tools.IsOnlyWhiteSpace(property)
             ? typeof object === 'function'
             : Tools.IsNotNull(object) && object.hasOwnProperty(property) && (typeof object[property] === 'function'); 
-    },
-
-
-    /** Wait the time indicated */
-    Sleep: (milliseconds: number = 0): Promise<void> => {
-        return new Promise(Resolve => setTimeout(Resolve, milliseconds));         
-    }, 
+    },  
 
     
     /** Avoids null value and responds with the specified type */
@@ -136,4 +134,25 @@ export const Tools = {
 
         return (type === 'string' ? '' : type === 'number' ? 0 : false) as T;
     },   
+
+    /** Wait the time indicated */
+    Sleep: (milliseconds: number = 0, transactionName: string = ''): Promise<void> => {
+        return new Promise(Resolve => { 
+            if(Tools.IsNotOnlyWhiteSpace(transactionName)) { 
+                const transaction = _Tools.transactions.get(transactionName);                          
+                if (transaction) clearTimeout(transaction); 
+                
+                _Tools.transactions.set(transactionName, setTimeout(
+                    () => {
+                        Resolve();
+                        _Tools.transactions.delete(transactionName);  
+                    }, milliseconds)
+                );
+            }
+
+            else {
+                setTimeout(Resolve, milliseconds);
+            } 
+        });                 
+    },
 };

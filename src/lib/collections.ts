@@ -24,6 +24,15 @@ export class Collections {
                 return Array.from(new Set(array));
             } 
 
+            if(TYPE === 'object') { 
+                const objectList = array.reduce((map, item) => { 
+                    map.set(JSON.stringify(item), item); 
+                    return map; 
+                }, new Map<string, T>());
+            
+                return [...objectList.values()];
+            }
+
             console.warn('Distinct: unsupported data type');
             return array;    
         } 
@@ -46,6 +55,12 @@ export class Collections {
                 return [...array].filter(item => !Collections.Distinct(exceptions).includes(item));
             } 
 
+            if(TYPE === 'object') {  
+                const ARRAY = [...array].map(item => ({ key: JSON.stringify(item), value: item }));
+                const EXCEPTIONS = new Set([...exceptions].map(item => JSON.stringify(item)));                  
+                return ARRAY.filter(item => !EXCEPTIONS.has(item.key)).map(item => item.value);
+            }
+
             console.warn('Except: unsupported data type');
             return array;    
         } 
@@ -67,6 +82,12 @@ export class Collections {
             if(['string', 'number', 'bigint', 'boolean'].includes(TYPE)) { 
                 return [...array].filter(item => Collections.Distinct(array2).includes(item));
             } 
+
+            if(TYPE === 'object') {  
+                const ARRAY = [...array].map(item => ({ key: JSON.stringify(item), value: item }));
+                const ARRAY2 = new Set([...array2].map(item => JSON.stringify(item)));                  
+                return ARRAY.filter(item => ARRAY2.has(item.key)).map(item => item.value);
+            }
 
             console.warn('Intercept: unsupported data type');
             return array;    
