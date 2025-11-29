@@ -4,8 +4,9 @@ import { Filters } from "./filters";
 import { Tools } from "./generic";
 import { PageResponse } from "./page-response";
 import { Source } from "./source";
+declare const appSettings: any;
 
-export abstract class Page {
+export abstract class PageControl {
 
     /** */
     protected isUpdate: boolean = false;
@@ -40,12 +41,12 @@ export abstract class Page {
     /** */
     constructor(pageName: string) {
         this.SetName(pageName);
-        this.__SetSource();
-        this.__GetSource();
+        Source.Set(this.__page);
+        this.__source = Source.Get();
         this.__GetNavigation();
         this.__SetGoBack();
-        this.__GetPageFilter();
-        this.__GetPageResponse();
+        this.pageFilters = Filters.Get(this.__path);
+        this.pageResponse = PageResponse.Get(); 
     }
 
 
@@ -78,20 +79,8 @@ export abstract class Page {
             Breadcrumbs.UpdateLast(pageName, this.__path); 
         } 
 
-        document.location.href = this.__path;
-    }
-
-
-    /** */
-    private __SetSource(): void {
-        Source.Set(this.__page);
-    }
-
-
-    /** */
-    private __GetSource(): void {
-        this.__source = Source.Get();
-    }
+        document.location.href = Tools.IsBooleanTrue(appSettings?.navigation?.useHash) ? `/#${this.__path}` : this.__path;
+    }  
 
 
     /** */
@@ -124,31 +113,16 @@ export abstract class Page {
                 click: this.__GoBack()
             };
         }
-    }
-
-
-    /** */
-    private __GetPageFilter(): void { 
-        this.pageFilters = Filters.Get(this.__path);   
-    }
-
-
-    /** */
-    private __GetPageResponse(): void {
-        this.pageResponse = PageResponse.Get(); 
-    }
+    }  
 
 
     /** Navigate to previous page */
-    protected GoToSource<T>(pageResponse: T | null = null, navigate?: (url: string) => void): void {
-        if(this.__source) {
+    protected GoToSource<T>(navigate: ((url: string) => void) | null = null, pageResponse: T | null = null): void {
+        if(this.__source && Tools.IsFunction(navigate)) {
             Breadcrumbs.RemoveLast();
             this.SetResponse(pageResponse);
             this.RemoveFilter();
-
-            Tools.Sleep().then(() => {
-                if(Tools.IsFunction(navigate)) navigate!(this.__source!.path);
-            }); 
+            Tools.Sleep().then(() => navigate!(this.__source!.path)); 
         }
     };
 

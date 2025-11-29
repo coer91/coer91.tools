@@ -4,7 +4,7 @@ export interface IMenuSelected {
     id: string;
     menu: IMenu;
     level: 'LV1' | 'LV2' | 'LV3';
-    action: 'NONE' | 'OPEN' | 'CLOSED';
+    action: 'NONE' | 'OPEN' | 'CLOSED' | 'GRID';
     tree: { 
         id: string;
         label: string;

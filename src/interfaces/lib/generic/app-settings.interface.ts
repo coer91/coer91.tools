@@ -17,5 +17,6 @@ export interface IAppSettings {
     },
     navigation: {
         static: boolean;
+        useHash: boolean;
     }
 }

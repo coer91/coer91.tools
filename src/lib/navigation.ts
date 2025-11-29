@@ -1,8 +1,9 @@
 import { IMenuSelected } from "../interfaces/index";
+declare const appSettings: any;
 
 export class Navigation {
 
-    private static readonly storage = 'COER-System';
+    private static readonly storage = appSettings?.appInfo?.storage || 'coer91';
 
     /** */
     public static SetSelectedMenu(selectedMenu: IMenuSelected): void { 

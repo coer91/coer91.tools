@@ -76,6 +76,6 @@ export class User {
             }
         } 
         
-        document.location.href = '/#/';
+        document.location.href = Tools.IsBooleanTrue(appSettings?.navigation?.useHash) ? '/#/' : '/';
     }  
 }

@@ -1,6 +1,6 @@
 export interface IMenuToolbar {
     label: string;
     icon?: string;
-    path?: string | (string | number)[];
+    path?: string;
     preventDefault?: boolean;
 }

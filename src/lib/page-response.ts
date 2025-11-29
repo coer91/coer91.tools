@@ -1,5 +1,4 @@
 import { Tools } from "./generic";
-
 declare const appSettings: any;
  
 export class PageResponse {

@@ -2,7 +2,7 @@ export interface IMenu {
     id?: number;
     label: string;
     icon?: string;
-    path?: string | (string | number)[];
+    path?: string;
     show?: 'LIST' | 'GRID';
     readonly?: boolean;
     sequence?: number; 
