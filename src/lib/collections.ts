@@ -1,3 +1,4 @@
+import { Dates } from "./dates";
 import { Tools } from "./generic";
  
 export class Collections {
@@ -118,14 +119,14 @@ export class Collections {
             if(!Array.isArray(array) || array.length <= 0) return [];  
 
             const TYPE = typeof array[0];
-            if(['string', 'number', 'bigint', 'boolean'].includes(TYPE)) { 
+            if(['string', 'number', 'bigint', 'boolean'].includes(TYPE)) {  
                 if(['string', 'boolean'].includes(TYPE)) {
                     return direction == 'ascending' 
                         ? array.sort((x: any, y: any) => String(x).localeCompare(String(y)))
                         : array.sort((x: any, y: any) => String(y).localeCompare(String(x)));
                 }
 
-                if(['number', 'bigint'].includes(TYPE)) {
+                else if(['number', 'bigint'].includes(TYPE)) {
                     return direction == 'ascending'
                         ? array.sort((x: any, y: any) => Number(x) - Number(y))
                         : array.sort((x: any, y: any) => Number(y) - Number(x));
@@ -133,9 +134,16 @@ export class Collections {
             } 
 
             if(TYPE === 'object') {  
-                if(Tools.IsNotOnlyWhiteSpace(property)) {
+                if(Dates.IsValidDate(String(array[0]))) {
+                    return direction === 'ascending'
+                        ? array.sort((x: any, y: any) => new Date(x).getTime() - new Date(y).getTime())
+                        : array.sort((x: any, y: any) => new Date(y).getTime() - new Date(x).getTime());
+                }                
+
+                else if(Tools.IsNotOnlyWhiteSpace(property)) {
                     const PROPERTY = String(property);
-                    const PROPERTY_TYPE = typeof (array[0] as any)[PROPERTY];
+                    const PROPERTY_TYPE = typeof (array[0] as any)[PROPERTY]; 
+
                     if(['string', 'number', 'bigint', 'boolean'].includes(PROPERTY_TYPE)) { 
                         if(['string', 'boolean'].includes(PROPERTY_TYPE)) { 
                             return direction == 'ascending'
@@ -143,12 +151,20 @@ export class Collections {
                                 : array.sort((x: any, y: any) => String(y[PROPERTY]).localeCompare(String(x[PROPERTY])));
                         }
                     
-                        if(['number', 'bigint'].includes(PROPERTY_TYPE)) {
+                        else if(['number', 'bigint'].includes(PROPERTY_TYPE)) {
                             return direction == 'ascending'
                                 ? array.sort((x: any, y: any) => Number(x[PROPERTY] - Number(y[PROPERTY])))
                                 : array.sort((x: any, y: any) => Number(y[PROPERTY] - Number(x[PROPERTY])));
                         }
                     } 
+
+                    else if(PROPERTY_TYPE === 'object') {  
+                        if(Dates.IsValidDate(String((array[0] as any)[PROPERTY]))) {
+                            return direction === 'ascending'
+                                ? array.sort((x: any, y: any) => new Date(x[PROPERTY]).getTime() - new Date(y[PROPERTY]).getTime())
+                                : array.sort((x: any, y: any) => new Date(y[PROPERTY]).getTime() - new Date(x[PROPERTY]).getTime());
+                        } 
+                    }
                 } 
 
                 else {

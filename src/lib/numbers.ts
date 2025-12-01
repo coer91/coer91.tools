@@ -42,7 +42,7 @@ export class Numbers {
 
 
     /** Return a string with numeric format */
-    public static GetNumericFormat(value: string | number | null | undefined, decimals: number = 0): string {
+    public static ToNumericFormat(value: string | number | null | undefined, decimals: number = 0): string {
         const [INTEGER, DECIMAL = ''] = this.SetDecimals(value).split('.');
 
         return decimals > 0
@@ -52,7 +52,7 @@ export class Numbers {
     
     
     /** Return a string with currency format */
-    public static GetCurrencyFormat(value: string | number | null | undefined, symbol: string = '$', currency: string = ''): string { 
-        return `${symbol}${this.GetNumericFormat(value, 2)}${currency.length > 0 ? ` ${currency}` : ''}`;
+    public static ToCurrency(value: string | number | null | undefined, symbol: string = '$', currency: string = ''): string { 
+        return `${symbol}${this.ToNumericFormat(value, 2)}${currency.length > 0 ? ` ${currency}` : ''}`;
     }
 }
