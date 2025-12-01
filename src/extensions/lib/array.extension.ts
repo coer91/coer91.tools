@@ -19,6 +19,12 @@ declare global {
         intercept(array: T[]): T[];
 
         /** */
+        sortAsc(property?: string): T[];
+
+        /** */
+        sortDesc(property?: string): T[];
+
+        /** */
         search(text: string, properties?: string[]): T[];
     }
 }  
@@ -47,6 +53,16 @@ Array.prototype.except = function<T>(exceptions: T[]): T[] {
 Array.prototype.intercept = function<T>(array: T[]): T[] {
     return Collections.Intercept(this, array);   
 } 
+
+
+Array.prototype.sortAsc = function<T>(property: string | null = null): T[] {
+    return Collections.SortAsc(this, property);   
+}
+
+
+Array.prototype.sortDesc = function<T>(property: string | null = null): T[] {
+    return Collections.SortDesc(this, property);   
+}
 
 
 Array.prototype.search = function<T>(text: string, properties: string[] = []): T[] {

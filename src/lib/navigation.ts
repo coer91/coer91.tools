@@ -23,7 +23,7 @@ export class Navigation {
         if (storage) {
             storage = JSON.parse(storage);
 
-            if (storage.hasOwnProperty('navigation'), storage.navigation.hasOwnProperty('selectedMenu')) {
+            if (storage.hasOwnProperty('navigation') && storage.navigation.hasOwnProperty('selectedMenu')) {
                 return storage.navigation.selectedMenu;
             }
         }

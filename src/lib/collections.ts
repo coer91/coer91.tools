@@ -17,7 +17,7 @@ export class Collections {
     /** */
     public static Distinct<T>(array: T[]): T[] { 
         try {
-            if(Tools.IsNull(array) || !Array.isArray(array)) return []; 
+            if(!Array.isArray(array) || array.length <= 0) return []; 
 
             const TYPE = typeof array[0];
             if(['string', 'number', 'bigint', 'boolean'].includes(TYPE)) {
@@ -47,8 +47,8 @@ export class Collections {
     /** */
     public static Except<T>(array: T[], exceptions: T[]): T[] {
         try {
-            if(Tools.IsNull(array) || !Array.isArray(array)) return []; 
-            if(Tools.IsNull(exceptions) || exceptions.length <= 0) return [...array]; 
+            if(!Array.isArray(array)      || array.length <= 0)      return []; 
+            if(!Array.isArray(exceptions) || exceptions.length <= 0) return [...array]; 
 
             const TYPE = typeof array[0];
             if(['string', 'number', 'bigint', 'boolean'].includes(TYPE)) { 
@@ -75,8 +75,8 @@ export class Collections {
     /** */
     public static Intercept<T>(array: T[], array2: T[]): T[] {
         try {
-            if(Tools.IsNull(array)  || !Array.isArray(array)) return []; 
-            if(Tools.IsNull(array2) || !Array.isArray(array2) || array2.length <= 0) return []; 
+            if(!Array.isArray(array)  || array.length <= 0) return []; 
+            if(!Array.isArray(array2) || array2.length <= 0) return []; 
 
             const TYPE = typeof array[0];
             if(['string', 'number', 'bigint', 'boolean'].includes(TYPE)) { 
@@ -101,8 +101,79 @@ export class Collections {
 
 
     /** */
+    public static SortAsc<T>(array: T[], property: string | null = null): T[] {
+        return [...this._Sort(array, property, 'ascending')]; 
+    }
+
+
+    /** */
+    public static SortDesc<T>(array: T[], property: string | null = null): T[] {
+        return [...this._Sort(array, property, 'descending')]; 
+    }
+
+
+    /** */
+    private static _Sort<T>(array: T[], property: string | null = null, direction: 'ascending' | 'descending' = 'ascending'): T[] {
+        try {
+            if(!Array.isArray(array) || array.length <= 0) return [];  
+
+            const TYPE = typeof array[0];
+            if(['string', 'number', 'bigint', 'boolean'].includes(TYPE)) { 
+                if(['string', 'boolean'].includes(TYPE)) {
+                    return direction == 'ascending' 
+                        ? array.sort((x: any, y: any) => String(x).localeCompare(String(y)))
+                        : array.sort((x: any, y: any) => String(y).localeCompare(String(x)));
+                }
+
+                if(['number', 'bigint'].includes(TYPE)) {
+                    return direction == 'ascending'
+                        ? array.sort((x: any, y: any) => Number(x) - Number(y))
+                        : array.sort((x: any, y: any) => Number(y) - Number(x));
+                }
+            } 
+
+            if(TYPE === 'object') {  
+                if(Tools.IsNotOnlyWhiteSpace(property)) {
+                    const PROPERTY = String(property);
+                    const PROPERTY_TYPE = typeof (array[0] as any)[PROPERTY];
+                    if(['string', 'number', 'bigint', 'boolean'].includes(PROPERTY_TYPE)) { 
+                        if(['string', 'boolean'].includes(PROPERTY_TYPE)) { 
+                            return direction == 'ascending'
+                                ? array.sort((x: any, y: any) => String(x[PROPERTY]).localeCompare(String(y[PROPERTY])))
+                                : array.sort((x: any, y: any) => String(y[PROPERTY]).localeCompare(String(x[PROPERTY])));
+                        }
+                    
+                        if(['number', 'bigint'].includes(PROPERTY_TYPE)) {
+                            return direction == 'ascending'
+                                ? array.sort((x: any, y: any) => Number(x[PROPERTY] - Number(y[PROPERTY])))
+                                : array.sort((x: any, y: any) => Number(y[PROPERTY] - Number(x[PROPERTY])));
+                        }
+                    } 
+                } 
+
+                else {
+                    console.warn('Sort: property is required');
+                    return array;  
+                }
+            }
+
+            console.warn('Sort: unsupported data type');
+             
+            return array;    
+        } 
+
+        catch (error) {
+            console.warn(error);
+            return array;
+        }
+    }
+
+
+    /** */
     public static Search<T>(array: T[], text: string, properties: string[] = []): T[] {
         try {
+            if(!Array.isArray(array) || array.length <= 0) return [];  
+
             const TYPE = typeof array[0];
             text = text.cleanUpBlanks().toUpperCase().removeAccents();
 
@@ -126,5 +197,5 @@ export class Collections {
             console.warn(error);
             return array;
         }
-    }
+    } 
 }
