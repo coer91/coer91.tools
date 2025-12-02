@@ -165,7 +165,9 @@ export class Dates {
 
     /** */
     public static ToFormatDateTime(date: string | Date, ampm: boolean = false, format?: 'MDY' | 'DMY'): string { 
-        return this.ToFormatDate(date, format) + ' at ' + this.ToFormatTime(date, ampm);
+        return Tools.IsNotOnlyWhiteSpace(date) 
+            ? (this.ToFormatDate(date, format) + ' at ' + this.ToFormatTime(date, ampm))
+            : '';
     }  
     
 

@@ -46,7 +46,7 @@ export class Collections {
 
 
     /** */
-    public static Except<T>(array: T[], exceptions: T[]): T[] {
+    public static Except<T>(array: T[], exceptions: T[], property: string | null = null): T[] {
         try {
             if(!Array.isArray(array)      || array.length <= 0)      return []; 
             if(!Array.isArray(exceptions) || exceptions.length <= 0) return [...array]; 
@@ -57,9 +57,16 @@ export class Collections {
             } 
 
             if(TYPE === 'object') {  
-                const ARRAY = [...array].map(item => ({ key: JSON.stringify(item), value: item }));
-                const EXCEPTIONS = new Set([...exceptions].map(item => JSON.stringify(item)));                  
-                return ARRAY.filter(item => !EXCEPTIONS.has(item.key)).map(item => item.value);
+                if(Tools.IsOnlyWhiteSpace(property)) {
+                    const ARRAY = [...array].map(item => ({ key: JSON.stringify(item), value: item }));
+                    const EXCEPTIONS = new Set([...exceptions].map(item => JSON.stringify(item)));                  
+                    return ARRAY.filter(item => !EXCEPTIONS.has(item.key)).map(item => item.value);
+                }
+
+                else {
+                    const values = new Set(exceptions.map((y: any) => String(y[property!])));
+                    return array.filter((x: any) => !values.has(String(x[property!]))); 
+                }
             }
 
             console.warn('Except: unsupported data type');
@@ -74,7 +81,7 @@ export class Collections {
 
 
     /** */
-    public static Intercept<T>(array: T[], array2: T[]): T[] {
+    public static Intercept<T>(array: T[], array2: T[], property: string | null = null): T[] {
         try {
             if(!Array.isArray(array)  || array.length <= 0) return []; 
             if(!Array.isArray(array2) || array2.length <= 0) return []; 
@@ -85,9 +92,16 @@ export class Collections {
             } 
 
             if(TYPE === 'object') {  
-                const ARRAY = [...array].map(item => ({ key: JSON.stringify(item), value: item }));
-                const ARRAY2 = new Set([...array2].map(item => JSON.stringify(item)));                  
-                return ARRAY.filter(item => ARRAY2.has(item.key)).map(item => item.value);
+                if(Tools.IsOnlyWhiteSpace(property)) {
+                    const ARRAY = [...array].map(item => ({ key: JSON.stringify(item), value: item }));
+                    const ARRAY2 = new Set([...array2].map(item => JSON.stringify(item)));                  
+                    return ARRAY.filter(item => ARRAY2.has(item.key)).map(item => item.value);
+                }
+
+                else {
+                    const values = new Set(array2.map((y: any) => String(y[property!])));
+                    return array.filter((x: any) => values.has(String(x[property!]))); 
+                }
             }
 
             console.warn('Intercept: unsupported data type');
@@ -197,16 +211,18 @@ export class Collections {
             const TYPE = typeof array[0];
             text = text.cleanUpBlanks().toUpperCase().removeAccents();
 
+            const CLEAN = (value: any): string => Tools.IsNotOnlyWhiteSpace(value) ? String(value).cleanUpBlanks().removeAccents().toUpperCase() : '';
+
             if(TYPE === 'object') { 
                 if(properties.length <= 0 && array.length > 0) {
                     properties = Tools.GetPropertyList(array[0]);
                 }
                 
-                return [...array].filter((item: any) => properties.some(property => String(item[property] || '').cleanUpBlanks().toUpperCase().removeAccents().includes(text)));    
+                return [...array].filter((item: any) => properties.some(property => CLEAN(item[property]).includes(text)));    
             } 
 
             else if(['string', 'number', 'bigint', 'boolean'].includes(TYPE)) { 
-                return [...array].filter((item: any) => String(item).cleanUpBlanks().toUpperCase().removeAccents().includes(text));
+                return [...array].filter((item: any) => CLEAN(item).includes(text));
             } 
 
             console.warn('Search: unsupported data type');

@@ -13,10 +13,10 @@ declare global {
         distinct(): T[]; 
 
         /** */
-        except(exceptions: T[]): T[];
+        except(exceptions: T[], property?: string): T[];
         
         /** */
-        intercept(array: T[]): T[];
+        intercept(array: T[], property?: string): T[];
 
         /** */
         sortAsc(property?: string): T[];
@@ -45,13 +45,13 @@ Array.prototype.distinct = function<T>(): T[] {
 } 
 
 
-Array.prototype.except = function<T>(exceptions: T[]): T[] {
-    return Collections.Except(this, exceptions);   
+Array.prototype.except = function<T>(exceptions: T[], property: string | null = null): T[] {
+    return Collections.Except(this, exceptions, property);   
 } 
 
 
-Array.prototype.intercept = function<T>(array: T[]): T[] {
-    return Collections.Intercept(this, array);   
+Array.prototype.intercept = function<T>(array: T[], property: string | null = null): T[] {
+    return Collections.Intercept(this, array, property);   
 } 
 
 
