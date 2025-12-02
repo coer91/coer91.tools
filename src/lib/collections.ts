@@ -127,17 +127,19 @@ export class Collections {
                 }
 
                 else if(['number', 'bigint'].includes(TYPE)) {
+                    const CLEANER = (val: any) => Number.isNaN(Number(val)) ? 0: Number(val);
                     return direction == 'ascending'
-                        ? array.sort((x: any, y: any) => Number(x) - Number(y))
-                        : array.sort((x: any, y: any) => Number(y) - Number(x));
+                        ? array.sort((x: any, y: any) => CLEANER(x) - CLEANER(y))
+                        : array.sort((x: any, y: any) => CLEANER(y) - CLEANER(x));
                 }
             } 
 
             if(TYPE === 'object') {  
                 if(Dates.IsValidDate(String(array[0]))) {
+                    const CLEANER = (val: any) => Dates.IsValidDate(val) ? (Dates.ToDate(val)?.getTime() || 0) : 0;
                     return direction === 'ascending'
-                        ? array.sort((x: any, y: any) => new Date(x).getTime() - new Date(y).getTime())
-                        : array.sort((x: any, y: any) => new Date(y).getTime() - new Date(x).getTime());
+                        ? array.sort((x: any, y: any) => CLEANER(x) - CLEANER(y))
+                        : array.sort((x: any, y: any) => CLEANER(y) - CLEANER(x));
                 }                
 
                 else if(Tools.IsNotOnlyWhiteSpace(property)) {
@@ -152,17 +154,19 @@ export class Collections {
                         }
                     
                         else if(['number', 'bigint'].includes(PROPERTY_TYPE)) {
+                            const CLEANER = (val: any) => Number.isNaN(Number(val)) ? 0: Number(val);
                             return direction == 'ascending'
-                                ? array.sort((x: any, y: any) => Number(x[PROPERTY] - Number(y[PROPERTY])))
-                                : array.sort((x: any, y: any) => Number(y[PROPERTY] - Number(x[PROPERTY])));
+                                ? array.sort((x: any, y: any) => CLEANER(x[PROPERTY]) - CLEANER(y[PROPERTY]))
+                                : array.sort((x: any, y: any) => CLEANER(y[PROPERTY]) - CLEANER(x[PROPERTY]));
                         }
                     } 
 
                     else if(PROPERTY_TYPE === 'object') {  
                         if(Dates.IsValidDate(String((array[0] as any)[PROPERTY]))) {
+                            const CLEANER = (val: any) => Dates.IsValidDate(val) ? (Dates.ToDate(val)?.getTime() || 0) : 0;
                             return direction === 'ascending'
-                                ? array.sort((x: any, y: any) => new Date(x[PROPERTY]).getTime() - new Date(y[PROPERTY]).getTime())
-                                : array.sort((x: any, y: any) => new Date(y[PROPERTY]).getTime() - new Date(x[PROPERTY]).getTime());
+                                ? array.sort((x: any, y: any) => CLEANER(x[PROPERTY]) - CLEANER(y[PROPERTY]))
+                                : array.sort((x: any, y: any) => CLEANER(y[PROPERTY]) - CLEANER(x[PROPERTY]));
                         } 
                     }
                 } 

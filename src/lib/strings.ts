@@ -102,7 +102,7 @@ export class Strings {
     /** Only Alphanumeric */
     public static OnlyNumbers(value: string | number | null | undefined): string {
         return (Tools.IsNotOnlyWhiteSpace(value)) 
-            ? String(value).replace(/[^0-9]/g , '') : ''; 
+            ? String(value).replace(/[^0-9.]/g , '') : ''; 
     }
 
 
